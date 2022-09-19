@@ -5,9 +5,19 @@ on:
     branches: [main]
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    environment:
+      name: ${{ github.ref_name }}
+      url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -36,7 +46,14 @@ jobs:
       - name: Build
         run: pnpm build
 
-      - name: Deploy
+      - name: Setup Github Pages
+        uses: actions/configure-pages@v2
+
+      - name: Upload artifact to Github Pages
         uses: actions/upload-pages-artifact@v1
         with:
           path: dist
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
