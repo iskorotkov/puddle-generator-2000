@@ -1,12 +1,14 @@
 {
   "compilerOptions": {
+    "target": "ESNext",
+    "lib": ["ESNext", "ES2015"],
     "composite": true,
     "module": "ESNext",
     "moduleResolution": "Node",
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "noLib": true
+    "importHelpers": true
   },
   "include": ["vite.config.ts"]
 }
